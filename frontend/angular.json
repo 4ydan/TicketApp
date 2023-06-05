@@ -119,6 +119,13 @@
               "src/**/*.html"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "sepm-group-phase:build:production"
+          }
         }
       }
     }
