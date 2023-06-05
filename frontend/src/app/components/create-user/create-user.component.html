@@ -1,0 +1,186 @@
+<div class="profile-header">
+  Add User
+</div>
+
+<div class="container">
+  <div class="user-info">
+    <form [formGroup]="createForm" (ngSubmit)="add()">
+      <div class="row" style="width: 80%; margin-top: 20px">
+        <div class="form-group col-md-6">
+          <label for="firstName">First Name</label>
+          <input type="text"
+                 name="firstName"
+                 formControlName="firstName"
+                 class="form-control"
+                 id="firstName"
+                 aria-describedby="emailHelp"
+          >
+          <div *ngIf="submitted && createForm.controls.firstName.errors" class="error">
+            <small class="form-text text-danger" *ngIf="createForm.controls.firstName.errors.required">
+              First Name is required!
+            </small>
+            <small class="form-text text-danger" *ngIf="createForm.controls.firstName.errors.maxlength">
+              Maximal number of characters is 50!
+            </small>
+            <small class="form-text text-danger" *ngIf="createForm.controls.firstName.value !== ''">
+              Field can not consist of only whitespaces!
+            </small>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="lastName">Last Name</label>
+          <input type="text"
+                 name="lastName"
+                 formControlName="lastName"
+                 class="form-control"
+                 id="lastName"
+                 aria-describedby="emailHelp"
+          >
+          <div *ngIf="submitted && createForm.controls.lastName.errors" class="error">
+            <small class="form-text text-danger" *ngIf="createForm.controls.lastName.errors.required">Your last
+              name
+              is
+              required!
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="createForm.controls.lastName.errors && createForm.controls.lastName.value !== ''">
+              Field can not consist of only whitespaces!
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="width: 80%; margin-top: 20px">
+        <div class="form-group col-md-12">
+          <label for="email">Email</label>
+          <input type="email"
+                 (input)="createForm.controls.email.setValue(createForm.controls.email.value.toLowerCase())"
+                 name="email"
+                 formControlName="email"
+                 class="form-control"
+                 id="email"
+                 aria-describedby="emailHelp"
+          >
+          <div *ngIf="submitted && createForm.controls.email.errors" class="error">
+            <small class="form-text text-danger" *ngIf="createForm.controls.email.errors.required">Your email
+              is
+              required!
+            </small>
+            <small class="form-text text-danger" *ngIf="createForm.controls.email.errors.pattern">Not a valid
+              email address!
+            </small>
+            <small class="form-text text-danger"
+                   *ngIf="createForm.controls.email.errors.emailTaken">
+              Email already taken!
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="width: 80%; margin-top: 20px">
+        <div class="form-group col-md-4">
+          <label for="country">Country</label>
+          <input type="text"
+                 name="country"
+                 class="form-control"
+                 formControlName="country"
+                 id="country"
+                 aria-describedby="emailHelp"
+                 maxlength="30"
+          >
+          <div *ngIf="createForm.controls.country.errors" class="error">
+            <small class="form-text text-danger"
+                   *ngIf="createForm.controls.country.errors.whitespace && createForm.controls.country.value !== ''">
+              Field can not consist of only whitespaces!
+            </small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="city">City</label>
+          <input type="text"
+                 name="city"
+                 class="form-control"
+                 id="city"
+                 formControlName="city"
+                 aria-describedby="emailHelp"
+                 maxlength="30"
+          >
+          <div *ngIf="createForm.controls.city.errors" class="error">
+            <small class="form-text text-danger"
+                   *ngIf="createForm.controls.city.errors.whitespace && createForm.controls.city.value !== ''">
+              Field can not consist of only whitespaces!
+            </small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="postalCode">Postal Code</label>
+          <input type="text"
+                 name="postalCode"
+                 formControlName="postalCode"
+                 class="form-control"
+                 id="postalCode"
+                 aria-describedby="emailHelp"
+                 maxlength="10"
+                 oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)
+          ">
+        </div>
+      </div>
+      <div class="row" style="width: 80%; margin-top: 20px">
+        <div class="form-group col-md-6" style="margin-top: 0">
+          <label for="street">Street</label>
+          <input type="text"
+                 name="street"
+                 formControlName="street"
+                 class="form-control"
+                 id="street"
+                 aria-describedby="emailHelp"
+                 maxlength="50"
+          >
+          <div *ngIf="createForm.controls.street.errors" class="error">
+            <small class="form-text text-danger"
+                   *ngIf="createForm.controls.street.value !== '' && createForm.controls.street.errors.whitespace">
+              Field can not consist of only whitespaces!
+            </small>
+          </div>
+        </div>
+        <div class="form-group col-md-6" style="margin-top: 0">
+          <label for="streetNr">Street Nr.</label>
+          <input type="number"
+                 name="streetNr"
+                 class="form-control"
+                 formControlName="streetNr"
+                 id="streetNr"
+                 aria-describedby="emailHelp"
+                 maxlength="10"
+                 oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)"
+          >
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <select class="form-select" id="floatingSelect" formControlName="role" >
+          <option selected value=''>Select Role</option>
+          <option value=0>Customer</option>
+          <option value=1>Admin</option>
+          <option value=2>Vendor</option>
+        </select>
+      </div>
+      <div class="mrs" style="margin-top: 40px; margin-bottom: 40px; width: 50%">
+        <div class="row">
+          <div class="col-sm">
+            <button class="btn btn-primary rounded-pill"
+                    style="width: 100%; text-align: center; justify-content: center; display:flex; background-color: rebeccapurple;"
+                    [disabled]="createForm.invalid" (submit)="add()">Save
+            </button>
+          </div>
+          <div class="col-sm">
+            <button class="btn btn-primary rounded-pill"
+                    style="width: 100%; text-align: center; justify-content: center; display:flex; background-color: mediumpurple;"
+                    (click)="router.navigateByUrl('/admin')">Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

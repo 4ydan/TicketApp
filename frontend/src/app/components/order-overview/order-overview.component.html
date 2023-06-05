@@ -1,0 +1,195 @@
+<div class="row pt-5 pb-2">
+  <span class="page-title ps-5">My Bookings</span>
+</div>
+<div class="button-groups">
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" (click)="getCanceledBookings()" class="btn btn-secondary" style="color: white; width: 100px"
+            [ngStyle]="{'background-color': canceled ? 'rebeccapurple' : 'mediumpurple' }"
+            [ngClass]="canceled ? 'active' : false">Canceled
+    </button>
+    <button type="button" (click)="getBoughtBookings()" class="btn btn-secondary" style="color: white; width: 100px"
+            [ngStyle]="{'background-color': bought ? 'rebeccapurple' : 'mediumpurple' }"
+            [ngClass]="bought ? 'active' : false">Bought
+    </button>
+    <button type="button" (click)="getReservedBookings()" class="btn btn-secondary" style="color: white; width: 100px"
+            [ngStyle]="{'background-color': reserved ? 'rebeccapurple' : 'mediumpurple' }"
+            [ngClass]="reserved ? 'active' : false">Reserved
+    </button>
+  </div>
+</div>
+<div class="container-fluid">
+  <!-- CANCELED BOOKINGS -->
+  <div *ngIf="canceled && !bought && !reserved && canceledEmpty && !canceledError">
+    <p style="font-size: larger">
+      Currently no canceled bookings
+    </p>
+  </div>
+  <div *ngIf="canceled && !bought && !reserved && !canceledEmpty && canceledError">
+    <p style="font-size: larger">
+      Something went wrong!
+    </p>
+  </div>
+  <div class="accordion" id="accordionExampleAll" *ngIf="canceled && !bought && !reserved && !canceledError && !canceledEmpty">
+    <div class="accordion-item" *ngFor="let booking of canceledBookings | paginate: {itemsPerPage: count, currentPage: p}; let i = index">
+      <h2 class="accordion-header" [id]="'heading' + i">
+        <button class="accordion-button" [ngClass]="{ 'collapsed': i !== 0 }" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + i" aria-expanded="true" [attr.aria-controls]="'collapse' + i">
+          <div class="row" style="width: 100%">
+            <div class="col">{{booking.date}}</div>
+            <div class="col" style="text-align: center">{{booking.tickets[0].performance.name}}</div>
+          </div>
+        </button>
+      </h2>
+      <div [id]="'collapse' + i" class="accordion-collapse collapse" [ngClass]="{ 'show': i === 0 }"
+           [attr.aria-labelledby]="'heading' + i">
+        <div class="accordion-body row">
+          <div class="col-4 seat">
+            <div style="text-align: center; font-size: larger"><b>Date</b></div>
+            <div style="text-align: center">{{booking.tickets[0].performance.date}}</div>
+            <div style="text-align: center">{{booking.tickets[0].performance.startTime + '-' + booking.tickets[0].performance.endTime}}</div>
+          </div>
+          <div class="col-4 category">
+            <div style="text-align: center; font-size: larger"><b>Location</b></div>
+            <div style="text-align: center">
+              {{booking.tickets[0].performance.hallPlan.name + ', ' + booking.tickets[0].performance.place}}
+            </div>
+          </div>
+          <div class="col-4 invoice">
+            <app-cancellation-invoice
+              [tickets]="booking.tickets"
+              [event]="booking.tickets[0].performance.name"
+              [location]="booking.tickets[0].performance.place"
+              [date]="booking.tickets[0].performance.date">
+            </app-cancellation-invoice>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOUGHT TICKETS -->
+
+  <div *ngIf="!canceled && bought && !reserved && boughtEmpty && !boughtError">
+    <p style="font-size: larger">
+      Currently no bought bookings
+    </p>
+  </div>
+  <div *ngIf="!canceled && bought && !reserved && !boughtEmpty && boughtError">
+    <p style="font-size: larger">
+      Something went wrong!
+    </p>
+  </div>
+  <div class="accordion" id="accordionExampleBought" *ngIf="bought && !reserved && !canceled && !boughtEmpty && !boughtError">
+    <div class="accordion-item" *ngFor="let booking of boughtBookings | paginate: {itemsPerPage: count, currentPage: p}; let i = index">
+      <h2 class="accordion-header" [id]="'heading' + i">
+        <button class="accordion-button" [ngClass]="{ 'collapsed': i !== 0 }" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + i" aria-expanded="true" [attr.aria-controls]="'collapse' + i">
+          <div class="row" style="width: 100%">
+            <div class="col">{{booking.date}}</div>
+            <div class="col" style="text-align: center">{{booking.tickets[0].performance.name}}</div>
+            <div class="col" style="text-align: end">
+              <i class="bi bi-receipt"></i>
+            </div>
+          </div>
+        </button>
+      </h2>
+      <div [id]="'collapse' + i" class="accordion-collapse collapse" [ngClass]="{ 'show': i === 0 }"
+           [attr.aria-labelledby]="'heading' + i">
+        <div class="accordion-body row">
+          <div class="form-check">
+            <input class="form-check-input" (change)="getChecked($event, booking)" type="checkbox" [value]="booking"
+                   id="flexCheckDefaultBought">
+            <label class="form-check-label" for="flexCheckDefaultBought">
+              <div class="col-4 seat">
+                <div style="text-align: center; font-size: larger"><b>Date</b></div>
+                <div style="text-align: center">{{booking.tickets[0].performance.date}}</div>
+                <div style="text-align: center">{{booking.tickets[0].performance.startTime + '-' + booking.tickets[0].performance.endTime}}</div>
+              </div>
+              <div class="col-4 category">
+                <div style="text-align: center; font-size: larger"><b>Location</b></div>
+                <div style="text-align: center">
+                  {{booking.tickets[0].performance.hallPlan.name + ', ' + booking.tickets[0].performance.place}}
+                </div>
+              </div>
+              <div class="col-4 invoice">
+                <app-order-invoice
+                  [tickets]="booking.tickets"
+                  [event]="booking.tickets[0].performance.name"
+                  [location]="booking.tickets[0].performance.place"
+                  [date]="booking.tickets[0].performance.date"
+                ></app-order-invoice>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESERVED TICKETS -->
+
+  <div *ngIf="!canceled && !bought && reserved && reservedEmpty && !reservedError">
+    <p style="font-size: larger">
+      Currently no reserved bookings
+    </p>
+  </div>
+  <div *ngIf="!canceled && !bought && reserved && !reservedEmpty && reservedEmpty">
+    <p style="font-size: larger">
+      Something went wrong!
+    </p>
+  </div>
+
+  <div class="accordion" id="accordionExampleReserved" *ngIf="!bought && reserved && !canceled && !reservedError && !reservedEmpty">
+    <div class="accordion-item" *ngFor="let booking of reservedBookings | paginate: {itemsPerPage: count, currentPage: p}; let i = index">
+      <h2 class="accordion-header" [id]="'heading' + i">
+        <button class="accordion-button" [ngClass]="{ 'collapsed': i !== 0 }" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + i" aria-expanded="true" [attr.aria-controls]="'collapse' + i">
+          <div class="row" style="width: 100%">
+            <div class="col">{{booking.date}}</div>
+            <div class="col" style="text-align: center">{{booking.tickets[0].performance.name}}</div>
+            <div class="col" style="text-align: end">
+              <i class="bi bi-credit-card"></i>
+            </div>
+          </div>
+        </button>
+      </h2>
+      <div [id]="'collapse' + i" class="accordion-collapse collapse" [ngClass]="{ 'show': i === 0 }"
+           [attr.aria-labelledby]="'heading' + i">
+        <div class="accordion-body row">
+          <div class="form-check" >
+            <input class="form-check-input" (change)="getChecked($event, booking)" type="checkbox" value="" id="flexCheckDefaultReserved">
+            <label class="form-check-label" for="flexCheckDefaultReserved">
+              <div class="col-6 seat">
+                <div style="text-align: center; font-size: larger"><b>Date</b></div>
+                <div style="text-align: center">{{booking.tickets[0].performance.date}}</div>
+                <div style="text-align: center">{{booking.tickets[0].performance.startTime + '-' + booking.tickets[0].performance.endTime}}</div>
+              </div>
+              <div class="col-6 category">
+                <div style="text-align: center; font-size: larger"><b>Location</b></div>
+                <div style="text-align: center">
+                  {{booking.tickets[0].performance.hallPlan.name + ', ' + booking.tickets[0].performance.place}}
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin: 15px; width: 100%; text-align: center" *ngIf="boughtBookings.length !== 0 || reservedBookings.length !== 0 || canceledBookings.length !== 0">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+  <div class="mrs" style="margin-top: 40px; margin-bottom: 40px; width: 100%; text-align: center">
+    <div class="row" style="width: 25%; text-align: center">
+      <div class="col-sm" *ngIf="reserved && !reservedEmpty && !reservedError">
+        <button class="btn btn-primary rounded-pill" style="text-align: center; width: 100%; justify-content: center; display:flex; background-color: rebeccapurple;" [disabled]="reservedBookingsToBuy.length === 0" (click)="openBuyReservedBookingsDialog()">Buy</button>
+      </div>
+      <div class="col-sm" *ngIf="bought && !boughtEmpty && !boughtError">
+        <button class="btn btn-primary rounded-pill" style="width: 100%; text-align: center; justify-content: center; display:flex; background-color: rebeccapurple;" [disabled]="bookingsToCancel.length === 0" (click)="openCancelTicketDialog()">Cancel</button>
+      </div>
+      <div class="col-sm" *ngIf="reserved && !reservedEmpty && !reservedError">
+        <button class="btn btn-primary rounded-pill" style="width: 100%; text-align: center; justify-content: center; display:flex; background-color: rebeccapurple;" [disabled]="bookingsToCancel.length === 0" (click)="openCancelTicketDialog()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="pt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formLogin"></span>
+
+      <div class="card shadow p-3 rounded-4">
+        <div class="card-title">
+          <p class="text-secondary fw-lighter">Welcome back !</p>
+          <h1 class="fw-bold" style="font-size: 50px">Log in</h1>
+        </div>
+        <div class="alert alert-danger text-center" style="font-size: 14px" *ngIf="failed">Warning! Account gets locked after 5 consecutive failed logins! </div>
+
+        <div class="card-body">
+          <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+
+            <div class="form-group">
+              <label for="inputEmail">Email</label>
+              <input type="text" name="email" formControlName="email" class="form-control" id="inputEmail"
+                     aria-describedby="emailHelp" placeholder="Enter email" maxlength="50">
+              <div *ngIf="submitted && loginForm.controls.email.errors" class="error">
+                <small class="form-text text-danger" *ngIf="loginForm.controls.email.errors.required">Your email is
+                  required!
+                </small>
+                <small class="form-text text-danger" *ngIf="loginForm.controls.email.errors.pattern">Not a valid
+                  email address!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <a id="forgotPassword" [routerLink]="['/forgot-password']" class="text-muted float-end">Forgot password ?</a>
+              <input type="password" name="password" formControlName="password" class="form-control" id="password"
+                     placeholder="Enter password" maxlength="50" (keydown.enter)="loginUser()">
+              <div *ngIf="submitted && loginForm.controls.password.errors" class="error">
+                <small class="form-text text-danger" *ngIf="loginForm.controls.password.errors.required">Your password
+                  is
+                  required!
+                </small>
+                <small class="form-text text-danger" *ngIf="loginForm.controls.password.errors.minlength">Your Password
+                  must be at least 8 characters long!
+                </small>
+              </div>
+            </div>
+            <div class="col-md-12 text-center">
+              <button type="button" name="submitButton" (click)="loginUser()"
+                      class="btn rounded-pill purple-btn"> &nbsp; Log in &nbsp;&nbsp;
+                <i class="bi bi-box-arrow-in-right"></i>
+              </button>
+            </div>
+          </form>
+          <a style="display: block;  margin-top: 30px; text-align: center;  text-decoration: none;">
+           <span class="text-muted">Don't have an account?</span>
+          <a id="signup" [routerLink]="['/signup']"
+        class="fw-semibold text-center"> Sign up</a>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

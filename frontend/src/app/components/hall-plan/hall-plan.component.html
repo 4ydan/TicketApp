@@ -1,0 +1,168 @@
+<div class="select-seats-site">
+  <div class="event-images">
+    <img class="card-img-top" alt="banner image" src="data:image/jpg;base64,{{hEventImage}}">
+  </div>
+  <div class="hall-plan">
+    <div class="info">
+      <span class="info-title">{{hPerformanceName}}</span>
+      <span class="performance-info">{{hPerformancePlace}}: {{hPerformanceDate}},
+        {{hPerformanceStartTime}}-{{hPerformanceEndTime}}
+      </span>
+    </div>
+    <div class="price">
+      <span class="seats-price">{{(calculatedPriceOfSeatTickets + calculatedPriceOfStandingTickets).toFixed(2)}} €</span>
+      <div class="tax-print">incl. taxes</div>
+    </div>
+    <div class="screen">
+      <div class="screen-line">
+        <canvas #canvasScreenline width="400" height="30"></canvas>
+      </div>
+      <span>Screen</span>
+    </div>
+    <div class="category">
+      <ng-container *ngFor="let category of sectorCategories">
+        <span><i class='bi bi-circle-fill' [style.color]="category.color"></i>{{(category.surcharge + hPerformancePrice).toFixed(2)}} {{checkSectorType(category.sectorType)}}</span>
+      </ng-container>
+    </div>
+    <div class="seat-plan">
+      <div *ngFor="let row of rows" class="seats">
+        <span>{{row}}</span>
+        <ng-container *ngFor="let seat of seats">
+          <button *ngIf="row === seat.seatRow" class="btn btn-sm" [disabled]="seat.booked" (click)="selectSeat(seat)"
+                  aria-label="seat">
+            <i *ngIf="seat.isSelected" class="bi bi-check-circle-fill" [style.color]="getSeatColor(seat.booked, seat.isSelected, seat.sectorType)" ></i>
+            <i *ngIf="!seat.isSelected" class="bi bi-circle-fill" [style.color]="getSeatColor(seat.booked, seat.isSelected, seat.sectorType)" ></i>
+          </button>
+        </ng-container>
+        <div class="break"></div>
+      </div>
+    </div>
+    <div class="standing-area">
+      <div class="area-draw">
+        <canvas #canvasStandingArea width="400" height="80"></canvas>
+      </div>
+      <div class="sa-slider">
+        <label for="standingAreaRange" class="form-label">Standing ticket selected</label>
+        <input type="range" class="form-range" min="0" max="{{hPerformanceHallPlanAvailableTicketNum}}" step="1" value="0" id="standingAreaRange"
+               [(ngModel)]="selectedStandingTicketNumber" (change)="standingTicketOnChange()">
+        <input type="number" class="form-input" min="0" max="{{hPerformanceHallPlanAvailableTicketNum}}" value="0" step="1" aria-label="standingAreaRange"
+               [(ngModel)]="selectedStandingTicketNumber" (change)="standingTicketOnChange()">
+        <span  class="standing-ticket-availability">Still {{hPerformanceHallPlanAvailableTicketNum}} standing tickets available</span>
+      </div>
+    </div>
+    <div class="booking-info">
+      <span><i class='bi bi-circle-fill'></i>Booked</span>
+      <span><i class='bi bi-check-circle-fill'></i>Selected</span>
+    </div>
+    <div *ngIf="!isVendor" class="confirmation">
+      <button type="button" class="btn rounded-pill" aria-label="reserve"
+              (click)="addToShoppingCart()"
+              [disabled]="tickets.length === 0 && selectedStandingTicketNumber === 0"
+      >Add to <i class="bi bi-cart"></i></button>
+      <button type="button" class="btn rounded-pill" aria-label="reserve"
+              (click)="validateSelection(true)"
+              data-bs-toggle="modal"
+              data-bs-target="#seatSelectionConfirmationModal"
+      >Reserve
+      </button>
+      <button type="button" class="btn rounded-pill" aria-label="buy"
+              (click)="validateSelection(false)"
+              data-bs-toggle="modal"
+              data-bs-target="#seatSelectionConfirmationModal"
+      >Buy
+      </button>
+    </div>
+    <div *ngIf="isVendor" class="confirmation">
+      <button type="button" class="btn rounded-pill" aria-label="reserve"
+              (click)="addToShoppingCart()"
+              [disabled]="tickets.length === 0 && selectedStandingTicketNumber === 0"
+      >Add to <i class="bi bi-cart"></i></button>
+      <button type="button" class="btn rounded-pill" aria-label="reserve"
+              (click)="validateSelection(true)"
+              data-bs-toggle="modal" data-bs-dismiss="modal"
+              data-bs-target="#EnterUserEmail"
+      >Reserve
+      </button>
+      <button type="button" class="btn rounded-pill" aria-label="buy"
+              (click)="validateSelection(false)"
+              data-bs-toggle="modal" data-bs-dismiss="modal"
+              data-bs-target="#EnterUserEmail"
+      >Buy
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="seatSelectionConfirmationModal" tabindex="-1"
+     aria-labelledby="seatSelectionConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="seatSelectionConfirmationModalTitleLabel">Selection Confirmation</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{this.confirmationInfoText}}
+        <ng-container *ngFor="let ticket of this.tickets">
+          <br *ngIf="ticket.isStandingTicket === false && this.isLoggedIn"/>
+          <span
+            *ngIf="ticket.isStandingTicket === false  && this.isLoggedIn">Seat number: <b>{{ticket.seat.seatNumber}}</b>, Seat row: <b>{{ticket.seat.seatRow}}</b>,
+          Sector type: <b>{{ticket.seat.sectorType}}</b>, Price: <b>{{ticket.price.toFixed(2)}}€</b></span>
+        </ng-container>
+        <br/><span
+        *ngIf="this.selectedStandingTicketNumber > 0 && this.isLoggedIn"><b>{{this.selectedStandingTicketNumber}}</b> x Standing Tickets, Price: <b>{{this.standingTicketPrice.toFixed(2)}}
+        €</b></span>
+        <div class="total-price">
+          <br/><span *ngIf="(calculatedPriceOfSeatTickets + calculatedPriceOfStandingTickets > 0.1) && this.isLoggedIn" >Total price: <b>{{(calculatedPriceOfSeatTickets + calculatedPriceOfStandingTickets).toFixed(2)}}</b>  €</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Back</button>
+        <button type="button" class="btn rounded-pill purple-btn" data-bs-dismiss="modal"
+                [disabled]="(this.tickets.length + this.selectedStandingTicketNumber) < 1 && this.isLoggedIn"
+                (click)="onClickSelectionConfirmation()">{{this.confirmationButtonText}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="EnterUserEmail" tabindex="-1"
+     aria-labelledby="EnterUserEmailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="EnterUserEmailLabel">Enter customer email</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div *ngIf="isVendor" class="modal-body">
+        <form class="form" [formGroup]="form">
+          <div class="form-group">
+            <input type="text" name="email" formControlName="email" class="form-control"
+                   id="inputEmail" autofocus
+                   aria-describedby="emailHelp" placeholder="Enter Email">
+            <div *ngIf="submitted && form.controls.email.errors" class="error">
+              <small class="form-text text-danger" *ngIf="form.controls.email.errors.required">Your email
+                is
+                required!
+              </small>
+              <small class="form-text text-danger" *ngIf="submitted && form.controls.email.errors.pattern">Not a valid
+                email address!
+              </small>
+              <small class="form-text text-danger" *ngIf="submitted && !form.controls.email.errors.emailTaken">User
+                with
+                specified email address does not exist!
+              </small>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" [disabled]="!form.valid" name="proceed"
+                class="btn text-center rounded-pill purple-btn" data-bs-toggle="modal"
+                data-bs-target="#seatSelectionConfirmationModal"
+        >Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

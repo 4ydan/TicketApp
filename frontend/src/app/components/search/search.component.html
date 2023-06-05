@@ -1,0 +1,27 @@
+<h1 class="category">Search results for {{formatSearchTerm()}}</h1>
+
+<div class="event-nav mb-3">
+  <span *ngIf="this.state==='events'" (click)="eventsView()" class="event-nav-selected">Events</span>
+  <span *ngIf="this.state!=='events'" (click)="eventsView()" class="event-nav-el">Events</span>
+  <span *ngIf="this.state==='artists'" (click)="artistsView()" class="event-nav-selected" >Artists</span>
+  <span *ngIf="this.state!=='artists'" (click)="artistsView()" class="event-nav-el" >Artists</span>
+</div>
+
+<div *ngIf="this.state==='events'">
+  <app-events mode="searchResults"></app-events>
+</div>
+
+<div *ngIf="this.state==='artists'">
+  <section class="search-result" *ngFor="let artist of artists">
+    <article class="listing"
+             [routerLink]="['/artist/', artist.id]">
+      <a>
+        <div class="listing-item">
+          <div class="listing-item-info">
+            <span class="title">{{artist.name}}</span>
+          </div>
+        </div>
+      </a>
+    </article>
+  </section>
+</div>

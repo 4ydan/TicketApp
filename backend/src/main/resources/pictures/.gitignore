@@ -1,0 +1,5 @@
+# All pictures used in the application will be saved in this directory
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore

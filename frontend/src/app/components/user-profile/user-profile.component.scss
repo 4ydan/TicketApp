@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position:relative;
+}
+
+.page-title {
+  font-size: 28px;
+}
+
+ html {
+   background-color: #311B62C4;
+ }
+
+.user-info {
+  border-radius: 10px;
+  flex-direction: column;
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85%;
+  width: 65%;
+  background-color: white;
+  box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.27);
+}
+
+.wrapper {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.col-6 {
+  font-size: 25px;
+  display: flex;
+}
+
+.col-4 {
+  font-size: 25px;
+  display: flex;
+}
+
+.modal-backdrop {
+  background: transparent !important;
+}
+

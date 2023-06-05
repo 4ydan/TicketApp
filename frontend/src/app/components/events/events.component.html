@@ -1,0 +1,270 @@
+<div *ngIf="mode!=='searchResults' && mode!=='Artist'" class="banner mb-3">
+  <img class="banner" style="position: relative;" alt="banner image" src="{{this.bannerPath}}">
+  <h1 class="category">{{titleFormat(this.title)}}</h1>
+
+</div>
+<div *ngIf="mode==='Artist'" class="banner mb-3">
+  <img class="banner" style="position: relative;" alt="banner image" src="{{this.bannerPath}}">
+  <h1 class="category">{{this.title}}</h1>
+</div>
+
+<div *ngIf="mode!=='Artist'">
+  <div *ngIf="mode!=='searchResults'" class="d-flex flex-row w-auto mb-3 justify-content-sm-center">
+    <div>
+      <button
+        type="button"
+        class="filter-button"
+        (click)="isCollapsed = ! isCollapsed"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseExample"
+      >
+        Filter
+        <i class="bi bi-filter"></i>
+      </button>
+    </div>
+    <div class="ms-2">
+      <select
+        id="eventSearchSort"
+        name="sort"
+        class="sort-button form-select"
+        [(ngModel)]="eventSearch.sort"
+        (ngModelChange)="changed(this)"
+      >
+        <option value="ALPHA">Sorted alphabetically</option>
+        <option value="DATE">Sorted by date</option>
+        <option value="TOPTEN">Top ten</option>
+      </select>
+    </div>
+    <div class="ms-2">
+      <button *ngIf="isAdmin()" type="button" class="plus-button" [routerLink]="['/events/create/']">+</button>
+    </div>
+    <div>
+
+    </div>
+  </div>
+</div>
+<div *ngIf="mode!=='searchResults'" class="filters" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+  <form class="d-flex flex-row w-auto mb-3 justify-content-md-center" (submit)="search()" id="myForm1">
+    <button type="submit" hidden="true">submit</button>
+
+    <div class="ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="eventSearchDescription" class="col-form-label">
+        Description
+      </label>
+      <input type="text"
+             name="description"
+             id="eventSearchDescription"
+             class="form-control small-filter-button"
+             [(ngModel)]="eventSearch.description"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+
+    <div class="flex-grow-2 ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="eventSearchDescription" class="col-form-label">
+        Min price (€)
+      </label>
+      <input type="number"
+             name="minPrice"
+             autocomplete="off"
+             inputmode="numeric"
+             id="eventSearchMinPrice"
+             class="form-control small-filter-button"
+             [(ngModel)]="eventSearch.minPrice"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+    <div class="flex-grow-2 ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="eventSearchDescription" class="col-form-label">
+        Max price (€)
+      </label>
+      <input type="number"
+             name="maxPrice"
+             autocomplete="off"
+             id="eventSearchMaxPrice"
+             class="form-control small-filter-button"
+             [(ngModel)]="eventSearch.maxPrice"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+  </form>
+
+  <form class="d-flex flex-row w-auto mb-3 justify-content-center" (submit)="search()" id="myForm2">
+    <div *ngIf="eventSearch.sort !== 'TOPTEN'" class="ms-1">
+      <label for="eventSearchDate" class="col-form-label">
+        From
+      </label>
+      <input type="date" name="startDate"
+             id="eventSearchDate"
+             class="form-control small-filter-button"
+             [(ngModel)]="eventSearch.startDate"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+    <div *ngIf="eventSearch.sort !== 'TOPTEN'" class="ms-1">
+      <label for="eventSearchDate" class="col-form-label">
+        To
+      </label>
+      <input type="date" name="endDate"
+             id="eventSearchEndDate"
+             class="form-control small-filter-button"
+             [(ngModel)]="eventSearch.endDate"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+    <div class="ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="eventSearchDuration" class="col-form-label">
+        Duration
+      </label>
+      <select
+        id="eventSearchDuration"
+        name="duration"
+        class="small-filter-button form-select"
+        [(ngModel)]="eventSearch.duration"
+        (ngModelChange)="changed(this)"
+      >
+        <option value=""></option>
+        <option value="30">up to 1 hour</option>
+        <option value="90">1-2 hours</option>
+        <option value="150">2-3 hours</option>
+        <option value="210">3-4 hours</option>
+        <option value="270">4-5 hours</option>
+        <option value="270">5-6 hours</option>
+      </select>
+    </div>
+    <div class="ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="startTime" class="col-form-label text-md-end text-muted">
+        From
+      </label>
+      <input type="time"
+             class="form-control"
+             id="startTime"
+             name="startTime"
+             [(ngModel)]="eventSearch.startTime"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+    <div class="ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="endTime" class="col-form-label text-md-end text-muted">
+        To
+      </label>
+      <input type="time"
+             class="form-control"
+             id="performanceStartTime"
+             name="endTime"
+             [(ngModel)]="eventSearch.endTime"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+    <div *ngIf="eventSearch.sort === 'TOPTEN'" class="ms-1">
+      <label for="eventSearchYearMonth" class="col-form-label">
+        Date
+      </label>
+      <input type="month" name="yearMonth"
+             id="eventSearchYearMonth"
+             class="form-control small-filter-button"
+             [(ngModel)]="eventSearch.yearMonth"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+  </form>
+
+  <form class="d-flex flex-row w-auto mb-3 justify-content-center" (submit)="search()" id="myForm3">
+    <div class="flex-grow-2 ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="eventSearchStreet" class="col-form-label">
+        Street
+      </label>
+      <input type="text" name="street"
+             id="eventSearchStreet"
+             class="form-control small-filter-button"
+             [(ngModel)]="eventSearch.street"
+             (ngModelChange)="changed(this)"
+      >
+    </div>
+    <div class="ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="eventSearchCity" class="col-form-label">
+        City
+      </label>
+      <select id="eventSearchCity"
+              class="form-select small-filter-button"
+              [(ngModel)]="eventSearch.city"
+              (ngModelChange)="changed(this)"
+              name="City" #City>
+        <option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </option>
+      </select>
+    </div>
+    <div class="flex-grow-2 ms-1" *ngIf="eventSearch.sort !== 'TOPTEN'">
+      <label for="eventSearchCountry" class="col-form-label">
+        Country
+      </label>
+      <select
+        id="eventSearchCountry"
+        name="sort"
+        class="form-select small-filter-button"
+        [(ngModel)]="eventSearch.country"
+        (ngModelChange)="changed(this)"
+      >
+        <option *ngFor="let country of countries" [value]="country">
+          {{country}}
+        </option>
+      </select>
+    </div>
+    <div class="ms-1" *ngIf="eventSearch.country">
+      <label for="eventSearchCode" class="col-form-label">
+        PostalCode
+      </label>
+      <select id="eventSearchCode"
+              *ngIf="eventSearch.country"
+              class="form-select small-filter-button"
+              [(ngModel)]="eventSearch.postalCode"
+              (ngModelChange)="changed(this)"
+              name="PostalCode" #PostalCode>
+        <option *ngFor="let code of postalCodes" [value]="code">
+          {{code}}
+        </option>
+      </select>
+    </div>
+    <button *ngIf="eventSearch.sort !== 'TOPTEN'" (click)="resetFilter()" class="btn btn-secondary ms-1" style="height: 50%; margin-top: auto"
+            aria-label="Reset filter">
+      <i class="bi bi-arrow-clockwise"></i>
+    </button>
+  </form>
+</div>
+
+<div *ngIf="eventSearch.sort === 'TOPTEN'" class="chart-container">
+  <canvas id="MyChart" class="topten-chart">{{ chart }}</canvas>
+</div>
+
+<div *ngIf="events && events.length!==0">
+  <section class="search-result" *ngFor="let event of events">
+    <article class="listing"
+             [routerLink]="['/events/', event.id]">
+      <a>
+        <div class="d-flex listing-item">
+          <div class="listing-item-image">
+            <img src="data:image/jpg;base64,{{event.image}}" alt="image of the event"/>
+          </div>
+          <div class="listing-item-info">
+            <span class="title">{{event.title}}</span>
+            <span class="description">{{event.description}}</span>
+          </div>
+          <div class="listing-item-date">
+            <span class="date">{{dateWithoutYear(event.startDate)}} - {{dateFormat(event.endDate)}}</span>
+          </div>
+        </div>
+      </a>
+    </article>
+  </section>
+</div>
+
+<div *ngIf="events.length===0" class="d-flex justify-content-center">
+  <br>
+  <div *ngIf="searching" class="spinner-border" role="status">
+    <span class="sr-only"></span>
+  </div>
+  <div *ngIf="!searching">
+    <h2>No events found</h2>
+  </div>
+</div>

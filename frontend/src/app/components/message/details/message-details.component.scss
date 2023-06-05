@@ -1,0 +1,31 @@
+.max-size {
+  height: 400px;
+  width: 100%;
+  object-fit: fill;
+}
+
+.background-gray {
+  background: rgba(0, 0, 0, 0.025);
+}
+
+.title {
+  font-size: 32px;
+}
+
+.btn-purple {
+  background-color: #311B62C4;
+  color: white;
+}
+
+.btn-purple:hover {
+  background-color: #311B62C4;
+}
+
+.btn-width {
+  width: 100px;
+}
+
+.btn-purple:active {
+  border-color: rebeccapurple;
+  color: white;
+}

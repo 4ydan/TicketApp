@@ -1,0 +1,16 @@
+.container-wrapper {
+  background-image: url("../assets/background.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  background-color: #f9fafb;
+  min-height: 110vh;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}

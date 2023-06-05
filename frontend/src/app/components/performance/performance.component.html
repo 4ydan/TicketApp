@@ -1,0 +1,60 @@
+<div *ngIf="event">
+
+  <div>
+    <img class="banner" alt="banner image" src="data:image/jpg;base64,{{this.event.image}}">
+    <h1 class="event-title">{{this.event.title}}</h1>
+  </div>
+
+  <div class="event-nav">
+    <span *ngIf="this.state==='performances'" (click)="performances()" class="event-nav-selected">Performances</span>
+    <span *ngIf="this.state!=='performances'" (click)="performances()" class="event-nav-el">Performances</span>
+    <span *ngIf="this.state==='about'" (click)="about()" class="event-nav-selected">About</span>
+    <span *ngIf="this.state!=='about'" (click)="about()" class="event-nav-el">About</span>
+  </div>
+
+  <div *ngIf="this.state==='performances'">
+    <div class="d-flex flex-row w-auto mb-3 justify-content-center">
+      <button *ngIf="isAdmin()" type="button" class="plus-button" [routerLink]="['add-performance']">+</button>
+    </div>
+    <section class="search-result" *ngFor="let performance of this.event.performances">
+      <div class="container listing">
+        <article class="row listing-item"
+                 [routerLink]="!isAdmin()?['/performance/hall-plan/', event.id, performance.id, performance.hallPlan.id]:'.'">
+
+          <div class="col-sm date" >
+            <span class="day">{{getDay(performance.date)}}</span>
+            <span class="month-year">{{getMonth(performance.date)}} {{getYear(performance.date)}}</span>
+            <div class="start-time">{{formatTime(performance.startTime, performance.endTime)}}</div>
+          </div>
+
+          <div class="col-sm place">
+            <span style="font-weight: bold">{{performance.country}}</span>
+            <span>{{performance.city}}</span>
+            <span>{{performance.street}} {{performance.streetNr}}</span>
+            <span>{{performance.postalCode}}</span>
+          </div>
+
+          <div class="col-sm price">
+            <span> from {{performance.price}} €</span>
+          </div>
+
+        </article>
+      </div>
+    </section>
+    <div class="d-flex justify-content-center">
+      <section *ngIf="this.event.performances.length === 0 && this.state==='performances'">
+        <div>
+          <h3>No Performances yet, check back later</h3>
+        </div>
+      </section>
+    </div>
+  </div>
+  <section class="search-result mt-3" *ngIf="this.state==='about'">
+    <div class="container listing">
+      <article class="row listing-item-description">
+        {{event.description}}
+      </article>
+    </div>
+  </section>
+</div>
+

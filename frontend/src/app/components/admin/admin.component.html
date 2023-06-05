@@ -1,0 +1,50 @@
+<div class="row pb-4 pt-5">
+  <div class="col">
+    <span class="page-title ps-5">List of Users</span>
+  </div>
+  <div class="col text-end pe-5">
+    <div class="buttons">
+      <button class="btn btn-primary rounded-pill" style="background-color: #311B62C4; border-color: #311B62C4;" (click)="router.navigateByUrl('/admin/create')">Add User</button>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <table style="margin-top: 20px" class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col">Email</th>
+      <th scope="col">Active</th>
+      <th scope="col">Role</th>
+      <th scope="col">Blocked</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users; let i = index" class="user">
+      <th style="padding-top: 15px" scope="row">{{i + 1}}</th>
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.isActivated ? 'YES' : 'NO'}}</td>
+      <td>{{user.role}}</td>
+      <td *ngIf="user.failedLogins < 5">NO</td>
+      <td class="blocked" *ngIf="user.failedLogins >= 5">BLOCKED</td>
+      <td class="button">
+        <button class="btn btn-primary" value="reset password" style="margin-right: 5px;" (click)="openConfirmationDialogResetPassword(user)">
+          <i class="bi bi-envelope"></i>
+        </button>
+        <button class="btn btn-danger" *ngIf="user.failedLogins < 5" (click)="openConfirmationDialog(user)">
+          <i class="bi bi-slash-circle"></i>
+        </button>
+        <button class="btn btn-success" *ngIf="user.failedLogins >= 5" (click)="openConfirmationDialogUnblock(user)">
+          <i class="bi bi-slash-circle"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="message!==undefined">
+<div class="d-flex justify-content-center">
+  <img class="max-size" src="data:image/jpg;base64,{{message.picture}}">
+</div>
+<div class="background-gray px-4">
+  <div class="row">
+    <span class="text-muted">{{message.publishedAt | date}}</span>
+  </div>
+  <div class="row title">
+    <span class="title-style">{{message.title}}</span>
+  </div>
+</div>
+<div class="row p-4">
+  <p class="card-text">{{message.shortDescription}}</p>
+  <p class="card-text">{{message.description}}</p>
+</div>
+<div *ngIf="isAdmin()" class="d-flex flex-row justify-content-between pb-3 px-4">
+  <button type="button" class="btn btn-purple btn-width" routerLink="edit">Edit</button>
+  <button type="button" class="btn btn-danger btn-width" (click)="openConfirmationDialog()">Delete</button>
+</div>
+</div>

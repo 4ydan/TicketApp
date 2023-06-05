@@ -1,0 +1,74 @@
+<div class="row pb-4 pt-5">
+  <div class="col">
+    <span class="page-title ps-5">Latest News</span>
+  </div>
+  <div class="col text-end pe-5">
+    <button class="plus-button" *ngIf="isAdmin()" type="button" routerLink="create">+</button>
+  </div>
+  <div class="btn-group col-sm-2 pe-5" role="group" aria-label="Basic radio toggle button group"
+       *ngIf="!isAdmin() && isLoggedIn()"
+       (change)="setRead(read.checked?read.value: unread.value); resetPage();loadMessages()">
+    <input type="radio"
+           class="btn-check"
+           id="btnradio1"
+           name="btnradio"
+           value="true"
+           #read
+           [checked]="getRead()==='true'" autocomplete="off">
+    <label class="btn btn-outline-primary" for="btnradio1">Read</label>
+    <input class="btn-check"
+           id="btnradio2"
+           type="radio"
+           name="btnradio"
+           value="false"
+           #unread
+           [checked]="getRead()!=='true'" autocomplete="off">
+    <label class="btn btn-outline-primary" for="btnradio2">Unread</label>
+  </div>
+</div>
+
+<div *ngIf="getMessages()!==undefined&&getMessages().length===0" class="alert alert-font-size text-center">
+  <i class="bi bi-info-circle info-icon-size"></i> <br> You are up to date! There is no news to show.
+</div>
+
+<div class="row messages-container">
+  <div class="col-md-6 p-2" *ngFor="let message of getMessages() | slice: 0 :10 ">
+    <div class="card no-border card-transition" [routerLink]="[message.id]">
+      <div class="card-body">
+        <img class="card-img-top crop-img pb-1" src="data:image;base64,{{message.picture}}">
+        <div class="row pb-2">
+          <div class="col-9">
+            <span class="card-title title">{{message.title}}</span>
+          </div>
+          <div class="col-3 text-end">
+            <span class="card-subtitle mb-2 text-muted">{{message.publishedAt | date}}</span>
+          </div>
+        </div>
+        <p class="card-text description">{{message.shortDescription}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pt-3 pb-5">
+  <div *ngIf="getPage()>0&&getMessages()!==undefined&&getMessages().length===11">
+    <div class="d-flex justify-content-between">
+      <div class="flex-column navigation" (click)="decrementPage();loadMessages()">
+        <i class="bi bi-arrow-left ps-4"></i> Go back to newer news
+      </div>
+      <div class="flex-column navigation pe-4" (click)="incrementPage();loadMessages()">See older news <i
+        class="bi bi-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="getPage()>0&&getMessages()!==undefined&&getMessages().length<11" class="justify-content-start ps-4">
+    <span class="navigation" (click)="decrementPage();loadMessages()"><i class="bi bi-arrow-left"></i> Go back to newer news</span>
+  </div>
+  <div *ngIf="getPage()===0&&getMessages()!==undefined&&getMessages().length===11"
+       class="d-flex justify-content-end pe-4">
+    <span class="navigation" (click)="incrementPage();loadMessages()">See older news <i
+      class="bi bi-arrow-right"></i></span>
+  </div>
+</div>
+
+

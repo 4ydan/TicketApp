@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="search" style="width: 66%">
+    <div>
+      <input type="header-search"
+             name="header-search"
+             id="header-search"
+             class="form-control"
+             [(ngModel)]="eventSearch.term"
+             (ngModelChange)="changed()"
+             placeholder="Search for events and artists"
+             autocomplete="off"
+             (keydown.enter)="onKeyDownEvent()"
+             (blur)='timeoutBlur()'
+      >
+    </div>
+    <table class="result-table" *ngIf="eventSearch.term !== ''">
+      <tbody>
+      <tr *ngIf="events && events.length!==0" class="result-title">
+        <h5>EVENTS</h5>
+      </tr>
+      <tr [routerLink]="['/events/', event.id]" (click)="onBlur()" class="container search-result"
+          *ngFor="let event of events">
+        <div class="row">
+          <td class="title">{{ event.title }}</td>
+          <td class="date">{{ formatDate(event.startDate, event.endDate) }}</td>
+        </div>
+      </tr>
+      <tr *ngIf="artists &&artists.length!==0" class="result-title">
+        <h5>ARTISTS</h5>
+      </tr>
+      <tr [routerLink]="['/artist/', artist.id]" (click)="onBlur()" class="container search-result"
+          *ngFor="let artist of artists">
+        <div class="row">
+          <td class="title">{{ artist.name }}</td>
+        </div>
+      </tr>
+      </tbody>
+      <tr *ngIf="events && events.length===0 && eventSearch.term !== '' && !hide">
+        <h5 style="cursor: text;">{{noResultsFound()}}</h5>
+      </tr>
+    </table>
+  </div>
+</div>
+

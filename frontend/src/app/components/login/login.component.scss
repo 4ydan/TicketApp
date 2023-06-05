@@ -1,0 +1,47 @@
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(233, 232, 252, 255) inset !important;
+}
+
+.card-title {
+  padding: var(--bs-card-spacer-x);
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+button[name=submitButton] {
+  margin-top: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  border: 0;
+}
+
+a[id=signup] {
+  color: #311B62C4 !important;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a[id=forgotPassword] {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.purple-btn {
+  background-color: #311B62C4;
+  color: white;
+  min-width: 90px;
+  border-color: #311B62C4;
+}
+
+.purple-btn:active{
+  color: white;
+  background-color: darken(#311B62C4, 25%);
+}

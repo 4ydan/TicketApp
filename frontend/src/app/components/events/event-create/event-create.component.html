@@ -1,0 +1,90 @@
+<div class="row pb-4 pt-5">
+  <div class="col">
+    <span class="page-title ps-5">Create Event</span>
+  </div>
+</div>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="flex-container">
+      <div class="flex-left">
+        <div class="img-div">
+          <img class="crop-img" src="data:image/jpg;base64,{{event.image}}" (click)="fileUpload.click()" style="cursor: pointer;">
+        </div>
+        <div>
+          <input type="file" class="file-input" form="ngForm" name="image" (change)="uploadSingleImage($event)" #fileUpload required/>
+        </div>
+        <label class="upload-label text-muted">
+          Upload Image
+        </label>
+      </div>
+      <div class="flex-right">
+        <label for="eventTitle" class="col-form-label text-md-start text-muted">
+          Title
+        </label>
+        <textarea rows="1" class="form-control" form="ngForm" name="title" [(ngModel)]="event.title" required></textarea>
+        <label for="eventDescription" class="col-form-label text-md-start text-muted">
+          Description
+        </label>
+        <textarea rows="5" class="form-control" form="ngForm" name="event.description" [(ngModel)]="event.description" required></textarea>
+        <label for="eventDurationInMinutes" class="col-form-label text-md-start text-muted">
+          Duration in Minutes
+        </label>
+        <input type="number" class="form-control" form="ngForm" name="event.durationInMinutes" [(ngModel)]="event.durationInMinutes" required>
+        <label for="eventStartDate" class="col-form-label text-md-end text-muted">
+          Event Start Date
+        </label>
+        <input type="date"
+            id="eventStartDate"
+            name="eventStartDate"
+            class="form-control"
+            [(ngModel)]="event.startDate"
+            #eventStartDateModel="ngModel"
+            required
+            >
+        <label for="eventEndDate" class="col-form-label text-md-end text-muted">
+          Event End Date
+        </label>
+        <input type="date"
+            id="eventEndDate"
+            name="eventEndDate"
+            class="form-control"
+            [(ngModel)]="event.endDate"
+            #eventEndDateModel="ngModel"
+            required
+            >
+        <label for="eventCategory" class="col-form-label text-md-end text-muted">
+          Event Category
+        </label>
+        <select class="form-control"
+                id="eventCategory"
+                name="eventCategory"
+                [(ngModel)]="event.eventCategory"
+                required
+                >
+            <option value="CINEMA">Cinema</option>
+            <option value="OPERA">Opera</option>
+            <option value="THEATRE">Theatre</option>
+            <option value="CONCERT">Concert</option>
+        </select>
+        <label for="eventArtist" class="col-form-label text-md-end text-muted">
+          Event Artist
+        </label>
+        <textarea rows="1" class="form-control" form="ngForm" name="event.artist" [(ngModel)]="event.artist" required></textarea>
+        <div style="text-align: right; width: 80%;">
+          <label class="col-form-label text-md-start text-muted">
+            All fields are required.
+          </label>
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+          <button type="button" class="cancel-button" [routerLink]="['/events/cinema/']">Cancel</button>
+          <button type="submit"
+          class="create-edit-button"
+          [disabled]="!form.valid"
+          type="submit"
+          >
+          Create
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>

@@ -1,0 +1,69 @@
+<div class="row pt-5 pb-2">
+  <span class="page-title ps-5">My Profile</span>
+</div>
+
+<div class="container">
+  <div *ngIf="isCustomer" class="row"
+       style="width: 60%; justify-content: center; margin-top: 40px; font-size: 30px">
+    <div class="col-4" style="text-align: right; font-size: 30px">
+      <b>Bonus Points: </b>
+    </div>
+    <div class="col-4" style="text-align: left; font-size: 30px">{{user.bonusPoints}}</div>
+  </div>
+
+  <div class="user-info">
+    <div class="row" style="width: 80%; margin-top: 25px">
+      <div class="col-6" style="text-align: left">
+        <b>First Name</b>
+      </div>
+      <div class="col-6" style="text-align: left">{{user.firstName}}</div>
+    </div>
+
+    <div class="row" style="width: 80%; margin-top: 25px">
+      <div class="col-6" style="text-align: left">
+        <b>Last Name</b>
+      </div>
+      <div class="col-6" style="text-align: left">{{user.lastName}}</div>
+    </div>
+
+    <div class="row" style="width: 80%; margin-top: 25px">
+      <div class="col-6" style="text-align: left">
+        <b>Email</b>
+      </div>
+      <div class="col-6" style="text-align: left">{{user.email}}</div>
+    </div>
+
+    <div class="row" style="width: 80%; margin-top: 25px">
+      <div class="col-6" style="text-align: left">
+        <b>Address</b>
+      </div>
+      <div *ngIf="user.address" class="col-6" style="text-align: left">{{userAddress}}</div>
+      <div *ngIf="!user.address" class="col-6" style="text-align: left">-</div>
+    </div>
+
+    <div class="mrs" style="margin-top: 40px; margin-bottom: 40px; width: 80%">
+      <div class="row">
+        <div class="col-sm">
+          <div class="btn btn-primary rounded-pill"
+               style="text-align: center; justify-content: center; display:flex; background-color: #311B62C4;"
+               (click)="router.navigateByUrl('/user-profile/edit', {state: {email: user.email}})">Edit Profile
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="btn btn-primary rounded-pill"
+               style="text-align: center; justify-content: center; display:flex; background-color: mediumpurple;"
+               (click)="router.navigateByUrl('/user-profile/change-password', {state: {email: user.email}})">Change
+            Password
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="btn btn-danger rounded-pill" style="text-align: center; justify-content: center; display:flex;"
+               (click)="openConfirmationDialog()">Delete Profile
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

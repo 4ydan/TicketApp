@@ -1,0 +1,54 @@
+.navbar-brand {
+  margin-left: 10px
+}
+
+.user-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.user-icon-button {
+  color: whitesmoke !important;
+  border-radius: 60px;
+  display: inline-block;
+}
+
+ul[id="dropdown"] {
+  a {
+    color: black;
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+#lblCartCount {
+  font-size: 12px;
+  background: darken(#311B62C4,30%);
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -10px;
+}
+.cart{
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+}
+.not-active{
+  opacity: 60%;
+}
+.shopping-cart:hover{
+  opacity: 80%;
+}

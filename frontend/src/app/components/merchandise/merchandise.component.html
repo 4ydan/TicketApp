@@ -1,0 +1,170 @@
+<div class="row pb-4 pt-5 ps-5">
+  <div class="col">
+  <span class="page-title ps-2">Merchandise</span> <br>
+  <span *ngIf="this.isLoggedIn && isCustomer" class="ps-2">Available Bonus Points: {{this.availableBonusPoints}}</span>
+  </div>
+    <div class="col-lg-2 px-2 pt-1">
+    <div ngbDropdown>
+      <span ngbDropdown class="pe-2">Filter: </span>
+      <button class="btn rounded-pill btn-outline-primary dropdown-button-filter-sort" ngbDropdownToggle>{{filterDisplay}}</button>
+      <div class="dropdown-menu" ngbDropdownMenu>
+        <button ngbDropdownItem (click)="filter='all';filterDisplay='All';page=0;loadMerchandises()">All</button>
+        <button ngbDropdownItem (click)="filter='premium';filterDisplay='Premium';page=0;loadMerchandises()">Premium</button>
+        <button ngbDropdownItem (click)="filter='non-premium';filterDisplay='Non premium';page=0;loadMerchandises()">Non premium</button>
+      </div>
+    </div>
+  </div>
+    <div class="col-lg-2 px-2 pt-1">
+      <div ngbDropdown>
+        <span ngbDropdown class="px-2">Sort: </span>
+        <button class="btn rounded-pill btn-outline-primary dropdown-button-filter-sort" ngbDropdownToggle>{{sortDisplay}}</button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem (click)="sort='newest';sortDisplay='Newest';page=0;loadMerchandises()">Newest</button>
+          <button ngbDropdownItem (click)="sort='lowest-price';sortDisplay='Lowest price';page=0;loadMerchandises()">Lowest price</button>
+          <button ngbDropdownItem (click)="sort='highest-price';sortDisplay='Highest price';page=0;loadMerchandises()">Highest price</button>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row merchandise-container">
+  <div class="col-md-3 p-2" *ngFor="let merchandise of getMerchandise() | slice: 0 :12 ">
+    <div class="card">
+      <img class="card-img-top crop-img pb-1 pt-3" src="data:image;base64,{{merchandise.picture}}">
+      <div class="card-body text-center">
+        <span *ngIf="merchandise.costsPoints!==null" class="premium"><span class="bi bi-star-fill"></span> PREMIUM <span class="bi bi-star-fill"></span></span> <br>
+        <span class="merch-name">{{merchandise.name}}</span> <br>
+
+        <p *ngIf="merchandise.costsPoints===null" class="col pt-3 pb-2 costs">{{merchandise.price}}<i class="bi bi-currency-euro"></i></p>
+        <div *ngIf="merchandise.costsPoints!==null" class="d-flex justify-content-center pb-4 pt-3 costs">
+          <div class="px-2">{{merchandise.price}}<i class="bi bi-currency-euro"></i></div>
+          <div class="px-2">or</div>
+          <div class="px-2">{{merchandise.costsPoints}} BP</div>
+        </div>
+
+        <div class="row" *ngIf="!inTheCart.get(merchandise)">
+            <div ngbDropdown class="col">
+              <button class="btn rounded-pill btn-outline-primary dropdown-button" [ngClass]="{'premium-dropdown-btn': merchandise.costsPoints!==null}" ngbDropdownToggle [disabled]="inTheCart.get(merchandise)">{{amounts.get(merchandise)}}</button>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <ng-container *ngFor="let number of inStock.get(merchandise)">
+                  <button ngbDropdownItem (click)="updateAmount(merchandise,number)">{{number}}</button>
+                </ng-container>
+              </div>
+          </div>
+          <div class="col">
+            <button class="btn rounded-pill purple-btn" (click)="addToCart(merchandise)">Add to <i
+              class="bi bi-cart"></i></button>
+          </div>
+          <div *ngIf="merchandise.costsPoints!==null" class="col">
+            <button *ngIf="isLoggedIn && isCustomer" class="btn rounded-pill purple-btn" data-bs-toggle="modal" data-bs-dismiss="modal"
+                    (click)="selectItem(merchandise)"
+                    data-bs-target="#redeemItem">Redeem
+            </button>
+            <button *ngIf="!isLoggedIn" class="btn rounded-pill purple-btn"
+                    (click)="selectItem(merchandise)">Redeem
+            </button>
+          </div>
+        </div>
+        <div *ngIf="inTheCart.get(merchandise)" class="d-flex justify-content-center">
+        <div class="in-the-cart-text pe-2">
+          Item is added to the <i class="bi bi-cart"></i>! </div>
+          <div *ngIf="merchandise.costsPoints!==null" class="ps-2">
+            <button *ngIf="isLoggedIn && isCustomer" class="btn rounded-pill purple-btn" data-bs-toggle="modal" data-bs-dismiss="modal"
+                    (click)="selectItem(merchandise)"
+                    data-bs-target="#redeemItem">Redeem
+            </button>
+            <button *ngIf="!isLoggedIn" class="btn rounded-pill purple-btn"
+                    (click)="selectItem(merchandise)">Redeem
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-4 pb-5">
+    <div *ngIf="page>0&&getMerchandise()!==undefined&&getMerchandise().length===17">
+      <div class="d-flex justify-content-between">
+        <div class="flex-column navigation" (click)="page=page-1;loadMerchandises()">
+          <i class="bi bi-arrow-left ps-4"></i> Go Back
+        </div>
+        <div class="flex-column navigation pe-4" (click)="page=page+1;loadMerchandises()">See More <i
+          class="bi bi-arrow-right"></i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="page>0&&getMerchandise()!==undefined&&getMerchandise().length<17" class="justify-content-start ps-4">
+      <span class="navigation" (click)="page=page-1;loadMerchandises()"><i class="bi bi-arrow-left"></i> Go Back</span>
+    </div>
+    <div *ngIf="page===0&&getMerchandise()!==undefined&&getMerchandise().length===17" class="d-flex justify-content-end pe-4">
+    <span class="navigation" (click)="page=page+1;loadMerchandises()">See More <i
+      class="bi bi-arrow-right"></i></span>
+    </div>
+  </div>
+
+</div>
+<!-- Modal for Redeeming Points -->
+<div class="modal fade" id="redeemItem" tabindex="-1"
+     aria-labelledby="redeemItemLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="redeemItemLabel">Claiming Item</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                      <td><strong>Item</strong></td>
+                      <td class="text-center"><strong>Points</strong></td>
+                      <td class="text-center"><strong>Quantity</strong></td>
+                      <td class="text-right"><strong>Total</strong></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>{{redeemingItem?.name}}</td>
+                      <td class="text-center">{{redeemingItem?.costsPoints}}</td>
+                      <td class="text-center">{{this.amounts.get(redeemingItem)}} </td>
+                      <td
+                        class="text-right">{{multiply(redeemingItem?.costsPoints, this.amounts.get(redeemingItem))}}</td>
+                    </tr>
+                    <tr>
+                      <td class="thick-line"></td>
+                      <td class="thick-line"></td>
+                      <td class="thick-line text-center"><strong>Your Points</strong></td>
+                      <td class="thick-line text-right">{{this.availableBonusPoints}}</td>
+                    </tr>
+                    <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line"></td>
+                      <td class="no-line text-center"><strong>Remaining Points</strong></td>
+                      <td
+                        class="no-line text-right">{{this.availableBonusPoints - multiply(redeemingItem?.costsPoints, this.amounts.get(redeemingItem))}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn rounded-pill purple-btn" data-bs-dismiss="modal"
+                [disabled]="!(this.availableBonusPoints > (this.multiply(this.redeemingItem?.costsPoints,
+      this.amounts.get(this.redeemingItem))))" (click)="redeemItem(redeemingItem.id,this.amounts.get(redeemingItem))">
+          Buy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

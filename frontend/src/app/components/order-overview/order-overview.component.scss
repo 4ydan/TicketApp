@@ -1,0 +1,70 @@
+.page-title {
+  font-size: 28px;
+}
+
+.button-groups {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 25px;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  //background-color: white;
+  //position:relative;
+  ////z-index:1000;
+  //width: 75vw;
+  //padding: 0;
+  //margin-top: 20px;
+}
+
+.accordion {
+  width: 100%;
+}
+
+.accordion-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.accordion-button::after {
+  order: -1; //swap order
+  margin-left: 0;
+  margin-right:0.5em; // just extra space between text and icon
+}
+
+.category, .seat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.invoice {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+}
+
+.form-check-input {
+  align-items: center;
+  margin-left: -10px;
+}
+
+.form-check-label {
+  display: flex;
+  width: 100%;
+}

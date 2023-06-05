@@ -1,0 +1,117 @@
+.page-title {
+  font-size: 28px;
+}
+
+.crop-img {
+  height: 300px;
+  object-fit: contain;
+}
+
+.merchandise-container {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.merch-name {
+  font-size: 16px;
+}
+
+.purple-btn {
+  font-size: 14px;
+  background-color: #311B62C4;
+  color: white;
+  min-width: 90px;
+}
+
+.purple-btn:active {
+  color: white;
+  background-color: darken(#311B62C4, 25%);
+}
+
+.only-left {
+  color: red;
+  opacity: 50%;
+}
+
+.dropdown-menu {
+  max-height: 180px;
+  overflow-y: auto;
+  min-width: 85% !important;
+}
+
+.dropdown-item {
+  white-space: normal;
+}
+.dropdown-toggle{
+  width: 80px;
+}
+.dropdown-button{
+  color: #311B62C4;
+  border-color: #311B62C4;
+}
+.dropdown-button:hover{
+  background-color: #311B62C4;
+  border-color: #311B62C4;
+  color:white;
+}
+.in-the-cart-text{
+  padding-top: 4px;
+  padding-bottom: 10px;
+}
+.premium{
+  font-size: 16px;
+  color: #311B62C4;
+}
+
+.premium-dropdown-btn{
+  width: auto;
+}
+.card{
+  border: none;
+}
+.navigation{
+  color: #311B62C4;
+  font-size: 18px;
+}
+.costs{
+  font-size: 20px;
+}
+.navigation:hover {
+  cursor: pointer;
+  opacity: 75%;
+}
+select{
+  outline: 0 !important;
+  height: 35px;
+  border-color: #311B62C4;
+  border-radius: 7px;
+}
+option{
+  padding: 5px 0;
+}
+.dropdown-button-filter-sort{
+  width: 120px;
+  background-color: white;
+  color: #311B62C4;
+  border-color: #311B62C4;
+}
+.dropdown-button-filter-sort:hover{
+  background-color: #311B62C4;
+  border-color: #311B62C4;
+  color:white;
+}
+.invoice-title h2, .invoice-title h3 {
+  display: inline-block;
+}
+
+ .no-line {
+  border-top: none;
+}
+
+ .no-line {
+  border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+  border-top: 2px solid;
+}

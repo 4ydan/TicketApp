@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+  <div class="d-flex ">
+
+    <a class="navbar-brand ml-lg-5 " href="">Ticketline</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/message" routerLinkActive="active">News</a>
+        </li>
+      </ul>
+      <li class="navbar-nav dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+           aria-expanded="false">
+          Events
+        </a>
+        <ul class="dropdown-menu" id="dropdown" aria-labelledby="navbarDropdown">
+          <li><a class=" btn dropdown-item" routerLink="/events/cinema">Cinema</a></li>
+          <li><a class=" btn dropdown-item" routerLink="/events/theatre">Theatre</a></li>
+          <li><a class=" btn dropdown-item" routerLink="/events/opera">Opera</a></li>
+          <li><a class=" btn dropdown-item" routerLink="/events/concert">Concert</a></li>
+        </ul>
+      </li>
+      <ul class="navbar-nav mr-5">
+        <a class="nav-link" *ngIf="this.authService.getUserRole() !== 'ADMIN'  && this.authService.getUserRole() !== 'VENDOR'  && authService.isLoggedIn()" routerLink="/order-overview" routerLinkActive="active">My Bookings</a>
+      </ul>
+      <ul class="navbar-nav">
+        <a class="nav-link" *ngIf="this.authService.getUserRole() !== 'ADMIN'" routerLink="/merchandise" routerLinkActive="active">Merchandise</a>
+      </ul>
+    </div>
+
+  </div>
+  <app-header-search class="nav-item flex-grow-1"></app-header-search>
+
+  <ul class="navbar-nav">
+    <div class="px-3 pt-1" *ngIf="this.authService.getUserRole() !== 'ADMIN'" [ngClass]="{'not-active shopping-cart': !this.router.url.includes('/shopping-cart')}">
+      <i class="bi bi-cart cart" style="font-size: 1.5em;" routerLink="/shopping-cart"></i>
+      <span class='badge' id='lblCartCount' routerLink="/shopping-cart"> {{countItems()}} </span>
+    </div>
+  </ul>
+
+  <li class="navbar-nav dropdown" style="z-index: 1000">
+    <h1 class="nav-link dropdown-toggle" style="margin: 0;" href="#" id="navbarDropdown" role="button"
+        data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-circle px-3" style="font-size: 1.8em;"></i></h1>
+    <ul class="dropdown-menu" id="dropdown" aria-labelledby="navbarDropdown">
+      <li><a class="nav-link me-lg-1" *ngIf="!authService.isLoggedIn()" routerLink="/login"
+             routerLinkActive="active">Login</a></li>
+      <li><a class="nav-link me-lg-1" *ngIf="!authService.isLoggedIn()" routerLink="/signup"
+             routerLinkActive="active">Sign up</a></li>
+      <li><a class="nav-link me-lg-1" *ngIf="authService.isLoggedIn()" routerLink="/user-profile"
+             routerLinkActive="active">Profile</a></li>
+      <li><a class="nav-link me-lg-1" *ngIf="this.authService.getUserRole() === 'ADMIN' && authService.isLoggedIn()"
+             routerLink="/admin"
+             routerLinkActive="active">Users</a></li>
+      <li><a class="nav-link me-lg-1" *ngIf="authService.isLoggedIn()" routerLink="/"
+             (click)="logoutUser()" routerLinkActive="active">Logout</a></li>
+    </ul>
+  </li>
+
+  <button class="navbar-toggler ml-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+</nav>

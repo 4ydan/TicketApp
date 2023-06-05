@@ -1,0 +1,104 @@
+.page-title {
+font-size: 28px;
+}
+
+html {
+background-color: rebeccapurple;
+}
+
+.crop-img {
+display: flex;
+justify-content: center;
+height: 120px;
+object-fit: cover;
+border-radius: 50%;
+margin-top: 20px
+}
+
+.img-div {
+display: flex;
+justify-content: center;
+}
+
+.form {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+position:relative;
+z-index:500;
+}
+
+.create-edit-button{
+background-color: mediumpurple;
+display: flex;
+margin-left: auto;
+margin-right: 20%;
+border: 0;
+border-radius: 20px;
+padding: 0.2rem 0.7rem 0.2rem 0.7rem;
+color: white;
+cursor: pointer;
+}
+
+.create-edit-button:disabled {
+background-color: rgb(194, 168, 246);
+display: flex;
+margin-left: auto;
+margin-right: 20%;
+border: 0;
+border-radius: 20px;
+padding: 0.2rem 0.7rem 0.2rem 0.7rem;
+color: white;
+cursor: pointer;
+}
+
+.cancel-button{
+background-color: #BE2020;
+display: flex;
+border: 0;
+border-radius: 20px;
+padding: 0.2rem 0.7rem 0.2rem 0.7rem;
+color: white;
+cursor: pointer;
+}
+
+.upload-label {
+display: flex;
+justify-content: center;
+margin-top: 10px;
+border: 0;
+border-radius: 20px;
+padding: 0.2rem 0.7rem 0.2rem 0.7rem;
+}
+
+.flex-container {
+display: flex;
+flex-direction: row;
+}
+
+.flex-left {
+width: 50%;
+height: 50vh;
+margin: 5px;
+padding: 5px;
+padding-left: 10%;
+//border: 2px solid red;
+}
+
+.flex-right {
+width: 100%;
+height: 50vh;
+margin: 5px;
+padding: 5px;
+//border: 2px solid green;
+}
+
+.form-control {
+background-color: #E9E8FC;
+width: 80%;
+}
+
+.file-input {
+display: none;
+}

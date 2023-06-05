@@ -1,0 +1,178 @@
+<div class="pt-5">
+  <span class="anchor" id="formSignup"></span>
+  <div class="card shadow rounded-4 mx-auto" style="width: 80%">
+    <div class="row">
+      <div class="col-4 shadow d-none d-md-block text-white" name=column1>
+        <h1 class="text-center pt-3 ">Sign up and experience Ticketline to the fullest<br><br>
+        </h1>
+        <ul>
+          <li>Gain access to tickets from various events</li>
+          <br>
+          <li>Receive bonus points for each order and trade them for exclusive benefits</li>
+          <br>
+          <li>Select your preferred seats in the seat selection</li>
+        </ul>
+        <h5></h5>
+      </div>
+      <div class="col-8">
+        <div class="card-title">
+          <h1 class="fw-bold" style="font-size: 50px">Sign Up</h1>
+        </div>
+
+        <div class="card-body">
+          <form class="row g-3" [formGroup]="signupForm" (ngSubmit)="submit()">
+            <div class="form-group col-md-6">
+              <label for="inputFirstName">First Name</label>
+              <input type="text" name="firstName" formControlName="firstName" class="form-control" id="inputFirstName"
+                     aria-describedby="emailHelp" placeholder="Enter first name" maxlength="30">
+              <div *ngIf="submitted && signupForm.controls.firstName.errors" class="error">
+                <small class="form-text text-danger" *ngIf="signupForm.controls.firstName.errors.required">Your first
+                  name
+                  is
+                  required!
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.firstName.errors && signupForm.controls.firstName.value !== ''">
+                  Field can not consist of only whitespaces!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="inputLastName">Last Name</label>
+              <input type="text" name="lastName" formControlName="lastName" class="form-control" id="inputLastName"
+                     aria-describedby="emailHelp" placeholder="Enter last name" maxlength="30">
+              <div *ngIf="submitted && signupForm.controls.lastName.errors" class="error">
+                <small class="form-text text-danger" *ngIf="signupForm.controls.lastName.errors.required">Your last
+                  name
+                  is
+                  required!
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.lastName.errors && signupForm.controls.lastName.value !== ''">
+                  Field can not consist of only whitespaces!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputEmail">Email</label>
+              <input (input)="signupForm.controls.email.setValue(signupForm.controls.email.value.toLowerCase())"
+                     type="text" name="email" formControlName="email" class="form-control" id="inputEmail"
+                     aria-describedby="emailHelp" placeholder="Enter email" maxlength="50">
+              <div *ngIf="submitted && signupForm.controls.email.errors" class="error">
+                <small class="form-text text-danger" *ngIf="signupForm.controls.email.errors.required">Your email
+                  is
+                  required!
+                </small>
+                <small class="form-text text-danger" *ngIf="signupForm.controls.email.errors.pattern">Not a valid
+                  email address!
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.email.errors.emailTaken">
+                  Email already taken!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="password">Password</label>
+              <input type="password" name="password" formControlName="password" class="form-control" id="password"
+                     placeholder="Enter password" maxlength="50">
+              <div *ngIf="submitted && signupForm.controls.password.errors" class="error">
+                <small class="form-text text-danger" *ngIf="signupForm.controls.password.errors.required">Your
+                  Password
+                  is
+                  required!
+                </small>
+                <small class="form-text text-danger" *ngIf="signupForm.controls.password.errors.minlength">Your
+                  Password
+                  must be at least 8 characters long!
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.password.errors.whitespace && signupForm.controls.password.value !== ''">
+                  Field can not consist of only whitespaces!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" name="confirmPassword" formControlName="confirmPassword" class="form-control"
+                     id="confirmPassword"
+                     placeholder="Confirm password" maxlength="50">
+              <div
+                *ngIf="submitted  && signupForm.controls.confirmPassword.errors" class="error">
+                <small class="form-text text-danger" *ngIf="signupForm.controls.confirmPassword.errors.required">Your
+                  Password needs to be confirmed!
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.confirmPassword.errors.match">
+                  Passwords must match!
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.confirmPassword.errors.whitespace && signupForm.controls.confirmPassword.value !== ''">
+                  Field can not consist of only whitespaces!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4" name="address">
+              <label for="country">Country</label><span class="text-muted"> (opt.)</span>
+              <input type="text" name="country" formControlName="country" class="form-control" id="country"
+                     placeholder="Enter country" maxlength="30">
+              <div *ngIf="submitted && signupForm.controls.country.errors" class="error">
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.country.errors.whitespace && signupForm.controls.country.value !== ''">
+                  Field can not consist of only whitespaces!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4" name="address">
+              <label for="city">City</label><span class="text-muted"> (opt.)</span>
+              <input type="text" name="city" formControlName="city" class="form-control" id="city"
+                     placeholder="Enter city" maxlength="30">
+              <div *ngIf="submitted && signupForm.controls.city.errors" class="error">
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.city.errors.whitespace && signupForm.controls.city.value !== ''">
+                  Field can not consist of only whitespaces!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4" name="address">
+              <label for="postalCode">Postal Code</label><span class="text-muted"> (opt.)</span>
+              <input type="number" name="postal" formControlName="postalCode" class="form-control" id="postalCode"
+                     placeholder="Enter postal" maxlength="10" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)">
+            </div>
+
+            <div class="form-group col-md-8" name="address">
+              <label for="street">Street</label><span class="text-muted"> (opt.)</span>
+              <input type="text" name="street" formControlName="street" class="form-control" id="street"
+                     placeholder="Enter street" maxlength="50">
+              <div *ngIf="submitted && signupForm.controls.street.errors" class="error">
+                <small class="form-text text-danger"
+                       *ngIf="signupForm.controls.street.value !== '' && signupForm.controls.street.errors.whitespace">
+                  Field can not consist of only whitespaces!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4" name="address">
+              <label for="streetNr">Nr.</label><span class="text-muted"> (opt.)</span>
+              <input type="number" name="streetNr" formControlName="streetNr" class="form-control" id="streetNr"
+                     placeholder="Enter number" maxlength="10" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)">
+            </div>
+
+            <div class="col-md-12 text-center">
+              <button type="button" name="submitButton" (click)="submit()"
+                      class="btn purple-btn text-center rounded-pill"> &nbsp; Create Account &nbsp;
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

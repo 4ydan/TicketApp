@@ -1,0 +1,101 @@
+.page-title {
+  font-size: 28px;
+}
+
+.crop-img {
+  max-height: 140px;
+  width: auto;
+}
+
+.crop-img-when-payment-active {
+  max-width: 100%;
+  height: auto;
+}
+
+.total {
+  margin-right: 20%;
+  font-size: 20px;
+}
+
+.merch-item {
+  position: relative;
+  margin: auto;
+  width: 60%;
+  border-bottom: 1px solid #C4C4C4;
+  min-height: 150px;
+}
+
+.ticket-item {
+  position: relative;
+  margin: auto;
+  width: 60%;
+  border-bottom: 1px solid #C4C4C4;
+  min-height: 100px;
+}
+
+.remove {
+  cursor: pointer;
+  font-style: italic;
+  text-decoration: underline;
+  position: absolute;
+  top: 5%;
+  right: 2%;
+}
+
+.payment {
+  font-size: 18px;
+}
+
+.total-sum {
+  font-size: 24px;
+}
+
+.custom-button {
+  background-color: #311B62C4;
+  border-color: #311B62C4;
+}
+.custom-button:active{
+  background-color: darken(#311B62C4, 25%) ;
+  border-color: darken(#311B62C4, 25%);
+}
+
+.dropdown-menu {
+  max-height: 180px;
+  overflow-y: auto;
+  min-width: 85% !important;
+}
+
+.dropdown-item {
+  white-space: normal;
+}
+.dropdown-toggle{
+  width: 80px;
+}
+.total-item {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.amount {
+  position: absolute;
+  bottom: 0;
+}
+.dropdown-button{
+  color: #311B62C4;
+  border-color: #311B62C4;
+}
+.dropdown-button:hover{
+  background-color: #311B62C4;
+  border-color: #311B62C4;
+  color:white;
+}
+.item-name{
+  font-size: 22px;
+}
+.subtitle{
+  padding-left: 18%;
+  font-size: 20px;
+}
+.performance-name{
+  font-size: 20px;
+}

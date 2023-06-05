@@ -1,0 +1,14 @@
+.btn-purple{
+  background-color: mediumpurple;
+  color: white;
+}
+
+.btn-purple:hover{
+  background-color: rebeccapurple;
+}
+
+.btn-purple:active {
+  color: white;
+  border-color: rebeccapurple;
+  background-color: rebeccapurple;
+}

@@ -1,0 +1,45 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(233, 232, 252, 255) inset !important;
+}
+
+button[name=submitButton]{
+  margin-top: 30px;
+}
+
+div[name=column1] {
+  background: #311B62C4;
+  font-size: 19px;
+  border-top-left-radius: var(--bs-border-radius-xl) !important;
+  border-bottom-left-radius: var(--bs-border-radius-xl) !important;
+}
+.form-group[name=address] {
+  margin-top: 30px;
+  border: 0;
+}
+label {
+  margin-bottom: 5px;
+}
+.card-title {
+  padding: var(--bs-card-spacer-x);
+}
+
+button[name=submitButton] {
+  margin-top: 30px;
+}
+
+.purple-btn {
+  background-color: #311B62C4;
+  color: white;
+  min-width: 90px;
+  border-color: #311B62C4;
+}
+
+.purple-btn:active{
+  color: white;
+  background-color: darken(#311B62C4, 25%);
+}
+
+

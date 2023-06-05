@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  position:relative;
+  z-index:1000;
+
+}
+.profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  height: 60px;
+  width: 300px;
+  font-size: 40px;
+  color: rebeccapurple;
+}
+
+.user-info {
+  border-radius: 10px;
+  flex-direction: column;
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //border: 1px solid rebeccapurple;
+  //flex-direction: column;
+  width: 60%;
+  height: 95%;
+  background-color: white;
+  box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.27);
+}
+
+.col-md-6 {
+  margin-top: 25px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+

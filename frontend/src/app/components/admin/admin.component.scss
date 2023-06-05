@@ -1,0 +1,30 @@
+.page-title {
+  font-size: 28px;
+}
+
+.container-fluid {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+thead {
+  background: #C4C4C4;
+}
+
+.blocked {
+  color: red;
+}
+
+.user:hover  {
+  background: #C4C4C4;
+}
+
+td {
+  padding-top: 15px;
+}
+
+.button {
+  padding: 0.5rem 0.5rem !important;
+}
