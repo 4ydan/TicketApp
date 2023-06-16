@@ -1,5 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
   firebase: {
     apiKey: "AIzaSyDW15Nc1VC8i5tfHH8ICKWBRVRItfb0eik",
     authDomain: "filmer-920e0.firebaseapp.com",

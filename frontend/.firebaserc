@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "filmer-920e0": {
+      "hosting": {
+        "sepm-group-phase": [
+          "tickets-2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "filmer-920e0"
+  }
+}

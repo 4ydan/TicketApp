@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "sepm-group-phase",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
